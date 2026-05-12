@@ -6,7 +6,7 @@
 |---------|:---:|:---:|:---:|
 | FR-01: ユーザー認証 | ✓ ログインUI, OAuthリダイレクト, JWT保存 | ✓ OAuth処理, JWT発行, ユーザー保存 | ✓ DynamoDB usersテーブル, IAM |
 | FR-02: ロケーション入力 | ✓ 入力フォーム, 履歴表示UI | ✓ ロケーションAPI, DynamoDB保存 | ✓ DynamoDB locationsテーブル |
-| FR-03: AI画像生成 | ✓ 生成ボタン, プレビュー表示, ポーリング | ✓ 生成API, Claude呼び出し, SDXL呼び出し, S3保存 | ✓ S3バケット, Bedrock IAM権限 |
+| FR-03: AI画像生成 | ✓ 生成ボタン, プレビュー表示, ポーリング | ✓ 生成API, Claude呼び出し, Nova Canvas呼び出し, S3保存 | ✓ S3バケット, Bedrock IAM権限 |
 | FR-04: Google Photos連携 | ✓ 保存ボタン, 完了表示 | ✓ Google Photos API呼び出し | ✓ Google OAuth設定（GCP側） |
 | FR-05: ロケーション提案 | ✓ 提案リスト表示UI, 選択操作 | ✓ 位置情報取得API, 逆ジオコーディング | ✓ Geocoding API権限 |
 | FR-EXT-02: 自動画像生成（MVP外） | — | — | — |
@@ -67,7 +67,7 @@
 - [ ] `POST /generate` — 画像生成ジョブ開始
 - [ ] `GET /generate/{job_id}` — 生成ステータス確認
 - [ ] PromptBuilderService（Claude呼び出し）
-- [ ] ImageGeneratorService（SDXL呼び出し）
+- [ ] ImageGeneratorService（Nova Canvas呼び出し）
 - [ ] ImageStorageService（S3一時保存・署名付きURL）
 
 **Google Photos連携（FR-04）**:

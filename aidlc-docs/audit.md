@@ -163,3 +163,11 @@
 **Context**: INCEPTION PHASE - Units Generation - スコープ更新
 
 ---
+
+## モデル変更
+**Timestamp**: 2026-05-10T00:09:00Z
+**User Input**: "ちょっと使用するモデルを変更したいClaudeはSonnet 4.6に変更、画像生成モデルはNova Canvasに変更画像生成モデルのNova Canvasはレガシーモデルになっているので、今後Nova 2 Omnitに変更する可能性があることを考慮してメモしておくこと"
+**AI Response**: プロンプト生成モデルをClaude claude-sonnet-4-5に、画像生成モデルをNova Canvasに変更。Nova Canvasはレガシーモデルのため将来Nova 2 Omniへの移行をメモ。モデルIDは環境変数管理を推奨。更新ファイル: requirements.md, components.md, services.md, component-dependency.md, application-design.md
+**Context**: INCEPTION PHASE - モデル選定更新
+
+---

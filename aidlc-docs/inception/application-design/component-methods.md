@@ -95,3 +95,38 @@
 | `upsert_user(user_data)` | ユーザーデータ | `User` | ユーザー情報を作成または更新 |
 | `save_location(user_id, location_data)` | ユーザーID、ロケーションデータ | `Location` | ロケーションを保存 |
 | `list_locations(user_id)` | ユーザーID | `Location[]` | ロケーション履歴を取得 |
+
+---
+
+## LocationSuggestionService (Backend内部サービス)
+
+| メソッド | 入力 | 出力 | 概要 |
+|---------|------|------|------|
+| `get_suggestions(user_id, access_token)` | ユーザーID、Googleアクセストークン | `LocationSuggestion[]` | Google PhotoのEXIF位置情報からロケーション候補を取得・返却 |
+| `_fetch_photos_with_location(access_token)` | Googleアクセストークン | `PhotoWithLocation[]` | Google Photos APIから位置情報付き写真を取得（内部メソッド） |
+| `_reverse_geocode(lat, lng)` | 緯度、経度 | `str` | 緯度・経度をロケーション名に変換（逆ジオコーディング） |
+| `_deduplicate(locations)` | ロケーション名リスト | `LocationSuggestion[]` | 重複排除・ソートしてユニークな候補リストを返す（内部メソッド） |
+
+---
+
+## GooglePhotosService — FR-05追加メソッド (Backend内部サービス)
+
+| メソッド | 入力 | 出力 | 概要 |
+|---------|------|------|------|
+| `list_photos_with_location(access_token)` | Googleアクセストークン | `PhotoWithLocation[]` | `photoslibrary.readonly`スコープで位置情報付き写真の一覧を取得 |
+
+---
+
+## Frontend — SuggestionService (FR-05)
+
+| メソッド | 入力 | 出力 | 概要 |
+|---------|------|------|------|
+| `fetchSuggestions()` | なし | `LocationSuggestion[]` | バックエンドの `/locations/suggestions` を呼び出してロケーション候補を取得 |
+
+---
+
+## LocationRouter — FR-05追加エンドポイント
+
+| メソッド | エンドポイント | 入力 | 出力 | 概要 |
+|---------|--------------|------|------|------|
+| `get_location_suggestions(user)` | `GET /locations/suggestions` | JWT | `LocationSuggestion[]` | Google PhotoのEXIF位置情報からロケーション候補を返す |

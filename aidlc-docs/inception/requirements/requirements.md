@@ -108,7 +108,8 @@
 |---------|------|
 | **フロントエンド** | Next.js (TypeScript) |
 | **バックエンド** | Node.js (TypeScript) / FastAPI (Python) |
-| **AI画像生成** | Amazon Bedrock (Stable Diffusion / Titan Image) または OpenAI DALL-E |
+| **AI画像生成** | Amazon Bedrock (Amazon Nova Canvas) ※レガシーモデル。将来的にNova 2 Omniへの移行を検討 |
+| **プロンプト生成** | Amazon Bedrock (Claude claude-sonnet-4-6) |
 | **データベース** | Amazon DynamoDB（ユーザープロフィール、ロケーション履歴） |
 | **認証** | Google OAuth 2.0 |
 | **外部API** | Google Photos API |

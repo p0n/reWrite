@@ -40,7 +40,8 @@
              +------+----+  +-----+----+  +----+-----+  +----+----+  +---+------+
              | Amazon    |  | Amazon   |  | AWS S3   |  | AWS     |  | Google   |
              | Bedrock   |  | Bedrock  |  | (一時    |  | DynamoDB|  | Photos   |
-             | (Claude)  |  | (SDXL)   |  |  保存)   |  |         |  | API      |
+             | (Claude   |  | (Nova    |  |  保存)   |  |         |  | API      |
+             | Sonnet4.6)|  | Canvas)  |  |          |  |         |  |          |
              +-----------+  +----------+  +----------+  +---------+  +----------+
 ```
 
@@ -54,11 +55,12 @@
 |--------------|------|------|
 | Frontend | Next.js 14+ (TypeScript) | UI、OAuth開始、画像プレビュー |
 | Backend API | Python FastAPI | REST API、オーケストレーション |
-| Prompt Builder | Amazon Bedrock (Claude 3) | プロンプト生成 |
-| Image Generator | Amazon Bedrock (SDXL) | AI画像生成 |
+| Prompt Builder | Amazon Bedrock (Claude claude-sonnet-4-6) | プロンプト生成 |
+| Image Generator | Amazon Bedrock (Nova Canvas) ※レガシー、将来Nova 2 Omniへ移行検討 | AI画像生成 |
 | Image Storage | AWS S3 | 画像一時保存 |
 | Database | Amazon DynamoDB | ユーザー・ロケーション管理 |
 | Google Photos | Google Photos API | 画像保存先 |
+| Location Suggestion | Geocoding API (AWS Location Service / Google Maps) | Google Photo位置情報からロケーション提案 |
 
 ---
 
@@ -73,10 +75,11 @@
 | ImageGenerationService | 画像生成フロー全体のオーケストレーション |
 | PhotoSaveService | Google Photo保存フローのオーケストレーション |
 | PromptBuilderService | Claude経由でプロンプト構築 |
-| ImageGeneratorService | Bedrock SDXL呼び出し |
+| ImageGeneratorService | Bedrock Nova Canvas呼び出し（将来Nova 2 Omniへ移行検討） |
 | ImageStorageService | S3一時保存・署名付きURL |
-| GooglePhotosService | Google Photos API連携 |
+| GooglePhotosService | Google Photos API連携（保存 + 位置情報読み取り） |
 | DatabaseService | DynamoDBアクセス抽象化 |
+| LocationSuggestionService | Google Photo EXIF位置情報取得・逆ジオコーディング・ロケーション提案（FR-05） |
 
 ---
 
@@ -86,8 +89,8 @@
 |---------|------|------|
 | フロントエンド/バックエンド構成 | 分離構成 | 将来の拡張性、バックエンドの独立スケール |
 | バックエンド言語 | Python + FastAPI | AI/MLライブラリとの親和性、Bedrock SDK |
-| AI画像生成 | Amazon Bedrock (SDXL) | AWSに統一、IAM認証でセキュア |
-| プロンプト生成 | Claude (Bedrock) | LLMによる高品質プロンプト自動生成 |
+| AI画像生成 | Amazon Bedrock (Nova Canvas) | AWSに統一、IAM認証でセキュア。Nova Canvasはレガシーモデルのため将来Nova 2 Omniへ移行検討 |
+| プロンプト生成 | Claude claude-sonnet-4-6 (Bedrock) | LLMによる高品質プロンプト自動生成 |
 | 認証セッション | JWT (ステートレス) | サーバーサイドセッション不要、シンプル |
 | 画像一時保存 | S3 | 信頼性、プレビューURL発行、TTL管理 |
 | ロケーション履歴 | DynamoDB | AWSに統一、スケーラブル |
@@ -108,7 +111,8 @@
 
 ## 拡張性への考慮（Phase 2）
 
-FR-EXT-02（Google Photo位置情報取得）の追加を見据えた設計：
-- `LocationService` に `import_from_google_photos()` メソッドを追加するだけで対応可能
-- `GooglePhotosService` に読み取りスコープ（`photoslibrary.readonly`）を追加
+FR-EXT-02（Google Photo位置情報からの自動画像生成）の追加を見据えた設計：
+- FR-05（ロケーション提案）はMVPで実装済みのため、自動生成トリガーの追加のみで対応可能
+- `ImageGenerationService` にバッチ実行モードを追加するだけで対応可能
+- `GooglePhotosService` の読み取りスコープ（`photoslibrary.readonly`）はFR-05で既に取得済み
 - 既存のコンポーネント境界を変更する必要なし

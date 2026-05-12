@@ -12,7 +12,7 @@
 | Backend API | GooglePhotosService | 内部関数呼び出し |
 | Backend API | DatabaseService | 内部関数呼び出し |
 | PromptBuilderService | Amazon Bedrock (Claude) | AWS SDK |
-| ImageGeneratorService | Amazon Bedrock (SDXL) | AWS SDK |
+| ImageGeneratorService | Amazon Bedrock (Nova Canvas) | AWS SDK |
 | ImageStorageService | AWS S3 | AWS SDK |
 | GooglePhotosService | Google Photos API | HTTPS REST API |
 | DatabaseService | Amazon DynamoDB | AWS SDK |
@@ -82,9 +82,9 @@ PromptBuilderService → ImageGenerationService
  v
 ImageGeneratorService
  |
- | (7) Bedrock InvokeModel (SDXL)
+ | (7) Bedrock InvokeModel (Nova Canvas)
  v
-Amazon Bedrock (SDXL)
+Amazon Bedrock (Nova Canvas)
  |
  | (8) 画像バイナリ返却
  v
@@ -136,7 +136,7 @@ Frontend (保存完了表示)
 |---------|------|---------|---------|
 | Google OAuth 2.0 | ユーザー認証 | OAuth 2.0 認可コードフロー | GCPプロジェクト設定が必要 |
 | Google Photos Library API | 画像保存 | OAuth 2.0 アクセストークン | スコープ: `photoslibrary.appendonly` |
-| Amazon Bedrock (Claude) | プロンプト生成 | AWS IAM | リージョン: us-east-1 推奨 |
-| Amazon Bedrock (SDXL) | 画像生成 | AWS IAM | モデルアクセス申請が必要 |
+| Amazon Bedrock (Claude claude-sonnet-4-6) | プロンプト生成 | AWS IAM | リージョン: us-east-1 推奨 |
+| Amazon Bedrock (Nova Canvas) | 画像生成 | AWS IAM | レガシーモデル。将来Nova 2 Omniへ移行予定。モデルIDは環境変数で管理 |
 | AWS DynamoDB | データ永続化 | AWS IAM | オンデマンドキャパシティ |
 | AWS S3 | 画像一時保存 | AWS IAM | TTL設定でコスト最適化 |
