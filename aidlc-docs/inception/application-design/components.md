@@ -81,7 +81,7 @@
 ## Component 3: Prompt Builder (Claude on Bedrock)
 
 **名前**: `prompt_builder`  
-**技術**: Amazon Bedrock (Claude 3 Sonnet/Haiku)  
+**技術**: Amazon Bedrock (Claude claude-sonnet-4-6)  
 **責務**:
 - ユーザー入力（ロケーション名 + 活動カテゴリ）を受け取る
 - そのロケーションでリア充っぽい活動をしているシーンの詳細な英語プロンプトを生成
@@ -96,7 +96,8 @@
 ## Component 4: Image Generator (Bedrock)
 
 **名前**: `image_generator`  
-**技術**: Amazon Bedrock (Stable Diffusion XL / Titan Image Generator G1)  
+**技術**: Amazon Bedrock (Amazon Nova Canvas)  
+**注意**: Nova Canvas は現在レガシーモデル。将来的に **Nova 2 Omni** への移行を検討すること。モデルIDを環境変数で管理し、切り替えを容易にする設計とする。  
 **責務**:
 - Prompt Builderが生成したプロンプトを受け取る
 - 高品質な画像を生成（1〜5枚）

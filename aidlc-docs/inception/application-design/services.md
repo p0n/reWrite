@@ -86,26 +86,27 @@
 2. Claudeへのシステムプロンプトを構築
    - 「リア充っぽい」シーンの詳細な英語プロンプトを生成するよう指示
    - ロケーションの特徴・雰囲気を反映するよう指示
-3. Amazon Bedrock (Claude) を呼び出す
+3. Amazon Bedrock (Claude claude-sonnet-4-6) を呼び出す
 4. 生成されたプロンプトとネガティブプロンプトを返却
 ```
 
-**依存**: Amazon Bedrock (Claude 3 Sonnet/Haiku)
+**依存**: Amazon Bedrock (Claude claude-sonnet-4-6)
 
 ---
 
 ## Service 6: ImageGeneratorService
 
-**責務**: Amazon Bedrock（Stable Diffusion XL）で画像を生成
+**責務**: Amazon Bedrock（Nova Canvas）で画像を生成
 
 **オーケストレーションフロー**:
 ```
 1. プロンプト・ネガティブプロンプト・枚数を受け取る
-2. Bedrock InvokeModel API を呼び出す（Stable Diffusion XL）
+2. Bedrock InvokeModel API を呼び出す（Nova Canvas）
 3. 生成された画像バイナリ（base64デコード済み）を返却
 ```
 
-**依存**: Amazon Bedrock (Stable Diffusion XL / Titan Image Generator)
+**依存**: Amazon Bedrock (Amazon Nova Canvas)  
+**注意**: Nova Canvas はレガシーモデル。将来的に **Nova 2 Omni** への移行を検討。モデルIDは環境変数 `IMAGE_GEN_MODEL_ID` で管理すること。
 
 ---
 

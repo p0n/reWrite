@@ -87,7 +87,7 @@ frontend/
 - JWT発行・検証
 - ロケーション管理（DynamoDB）
 - プロンプト生成（Claude on Bedrock）
-- 画像生成（SDXL on Bedrock）
+- 画像生成（Nova Canvas on Bedrock）
 - 画像一時保存（S3）
 - Google Photos API連携
 

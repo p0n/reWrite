@@ -70,6 +70,7 @@ Step 4: 統合テスト
 | `/auth/me` | GET | — (JWT Header) | `User` |
 | `/locations` | POST | `{ name: string, activity: string }` | `Location` |
 | `/locations` | GET | — (JWT Header) | `Location[]` |
+| `/locations/suggestions` | GET | — (JWT Header) | `LocationSuggestion[]` |
 | `/generate` | POST | `{ location_id: string, count: number }` | `{ job_id: string }` |
 | `/generate/{job_id}` | GET | — | `{ status: string, images: ImageResult[] }` |
 | `/photos/save` | POST | `{ image_id: string }` | `{ photo_url: string }` |
